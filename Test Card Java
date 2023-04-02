@@ -1,0 +1,124 @@
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+import java.util.stream.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.*;
+
+class MyFrames extends Frame implements WindowListener{
+	MyFrames(String title){
+		super(title);
+		setLayout(new FlowLayout());
+		this.addWindowListener(this);
+		setSize(300, 300);
+		setVisible(true);
+		setBackground(Color.black);
+	}
+	public void windowActivated(WindowEvent arg0) { }
+	public void windowClosed(WindowEvent arg0) { }
+	public void windowClosing(WindowEvent arg0) {
+		System.exit(1);
+	}
+	public void windowDeactivated(WindowEvent arg0) { }
+	public void windowDeiconified(WindowEvent arg0) { }
+	public void windowIconified(WindowEvent arg0) { }
+	public void windowOpened(WindowEvent arg0) { }
+	@Override
+	public void paint(Graphics g) {
+		int a=125,b=125,c=50,d=50;
+		g.setColor(Color.red);
+		g.drawOval(a,b,c,d);
+		g.fillOval(a, b, c, d);
+		for(int i = 0; i < 256;i++)
+		{
+		Color ceva = new Color(255,0,i);
+		g.setColor(ceva);
+		g.drawOval(a,b,c,d);
+		g.fillOval(a, b, c, d);
+		try {
+			TimeUnit.MILLISECONDS.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		for(int i = 0; i < 256;i++)
+		{
+		Color ceva = new Color(255-i,0,255);
+		g.setColor(ceva);
+		g.drawOval(a,b,c,d);
+		g.fillOval(a, b, c, d);
+		try {
+			TimeUnit.MILLISECONDS.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		for(int i = 0; i < 256;i++)
+		{
+		Color ceva = new Color(0,i,255);
+		g.setColor(ceva);
+		g.drawOval(a,b,c,d);
+		g.fillOval(a, b, c, d);
+		try {
+			TimeUnit.MILLISECONDS.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		for(int i = 0; i < 256;i++)
+		{
+		Color ceva = new Color(0,255,255-i);
+		g.setColor(ceva);
+		g.drawOval(a,b,c,d);
+		g.fillOval(a, b, c, d);
+		try {
+			TimeUnit.MILLISECONDS.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		for(int i = 0; i < 256;i++)
+		{
+		Color ceva = new Color(i,255,0);
+		g.setColor(ceva);
+		g.drawOval(a,b,c,d);
+		g.fillOval(a, b, c, d);
+		try {
+			TimeUnit.MILLISECONDS.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		for(int i = 0; i < 256;i++)
+		{
+		Color ceva = new Color(255,255-i,0);
+		g.setColor(ceva);
+		g.drawOval(a,b,c,d);
+		g.fillOval(a, b, c, d);
+		try {
+			TimeUnit.MILLISECONDS.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+	}
+}
+public class Exercitiul_5 {
+	public static void main(String...strings){
+		MyFrames frame = new MyFrames("Circle color animation");
+		}
+	}
