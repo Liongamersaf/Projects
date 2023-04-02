@@ -1,0 +1,134 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <string.h>
+#include <conio.h>
+#include <malloc.h>
+#include <math.h>
+#include <search.h>
+#include <ctime>
+#include <time.h>
+#include <string>
+class Vehicul {
+int roti;
+float greutate;
+public:
+void setgreut(float a)
+{
+greutate = a;
+}
+void setroti(int b)
+{
+roti = b;
+}
+float getgreut()
+{
+return greutate;
+}
+int getroti()
+{
+return roti;
+}
+virtual void mesaj()
+{
+std::cout << "Mesaj din clasa Vehicul\n";
+}
+};
+class Automobil : public Vehicul {
+int incarcatura_pasageri;
+public:
+void mesaj() override
+{
+std::cout << "Mesaj din clasa Automobil\n";
+}
+void setgreut(int x)
+{
+incarcatura_pasageri = x;
+}
+int getgreut()
+{
+return incarcatura_pasageri;
+}
+};
+class Camion : public Vehicul
+{
+int incarcatura_pasageri;
+float incarcatura_utila;
+public:
+void greut(int x)
+{
+incarcatura_pasageri = x;
+}
+int pasageri()
+{
+return incarcatura_pasageri;
+}
+void utila(float y)
+{
+incarcatura_utila = y;
+}
+void mesaj() override
+{
+std::cout << "Mesaj din clasa Camion\n";
+}
+};
+class Barca : public Vehicul
+{
+int incarcatura_pasageri;
+public:
+void greut(int x)
+{
+incarcatura_pasageri = x;
+}
+int pasegeri()
+{
+return incarcatura_pasageri;
+}
+void mesaj() override
+{
+std::cout << "Mesaj din clasa Barca\n";
+}
+};
+int main()
+{
+// apel direct, prin intermediul unor obiecte specifice
+Vehicul monocicleta;
+Automobil ford;
+Camion semi;
+Barca barca_de_pescuit;
+monocicleta.mesaj();
+monocicleta.setgreut(30);
+monocicleta.setroti(1);
+std::cout << "Monocicleta are o greutate de: " << monocicleta.getgreut() << "kg si " << monocicleta.getroti() << " roata/roti" << std::endl;
+ford.mesaj();
+ford.setgreut(2000);
+std::cout << "Ford-ul are: " << ford.getgreut() << "kg" << std::endl ;
+semi.mesaj();//din Vehicul ca si CB
+barca_de_pescuit.mesaj();
+// apel prin intermediul unui pointer specific
+Vehicul* pmonocicleta;
+Automobil* pford;
+Camion* psemi;
+Barca* pbarca_de_pescuit;
+std::cout << "\n";
+pmonocicleta = &monocicleta;
+pmonocicleta->mesaj();
+pford = &ford;
+pford->mesaj();
+psemi = &semi;
+psemi->mesaj();//din CB
+pbarca_de_pescuit = &barca_de_pescuit;
+pbarca_de_pescuit->mesaj();
+// apel prin intermediul unui pointer catre un obiect al clasei de baza
+std::cout << "\n";
+pmonocicleta = &monocicleta;
+pmonocicleta->mesaj();//Vehicul
+pmonocicleta = &ford;//upcasting
+pmonocicleta->mesaj();//Automobil
+pmonocicleta = &semi;//upcasting
+pmonocicleta->mesaj();//Camion- Vehicul
+pmonocicleta = &barca_de_pescuit;//upcasting
+pmonocicleta->mesaj();//Barca
+return 0;
+}
