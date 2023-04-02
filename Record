@@ -1,0 +1,213 @@
+//Definiti o clasa numita Record care stocheaza informatiile aferente unei melodii (artist, titlu, durata). O clasa abstracta (Playlist) contine ca atribut privat un pointer spre un sir de obiecte de tip inregistrare. In constructor se aloca memorie pentru un numar de inregistrari definit de utilizator. Clasa contine metode accesor si mutator pentru datele componente ale unei inregistrari si o metoda pur virtuala cu un parametru (abstracta), care poate ordona sirul de inregistrari dupa un anumit criteriu codat in valoarea intreaga primita ca parametru (1=ordonare dupa titlu, 2=ordonare dupa artist, 3=ordonare dupa durata). Intr-o alta clasa (PlaylistImplementation) derivata din Playlist se implementeaza corpul metodei abstracte de sortare.//
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <string.h>
+#include <conio.h>
+#include <malloc.h>
+#include <math.h>
+#include <search.h>
+#include <ctime>
+#include <time.h>
+#include <string>
+using namespace std;
+class Record
+{
+private:
+char artist[100];
+char titlu[100];
+int minute;
+int secunde;
+public:
+char* get_artist()
+{
+return artist;
+}
+char* get_titlu()
+{
+return titlu;
+}
+int get_min()
+{
+return minute;
+}
+int get_sec()
+{
+return secunde;
+}
+void set_artist(char* a)
+{
+strcpy(artist, a);
+}
+void set_titlu(char* t)
+{
+strcpy(titlu, t);
+}
+void set_min(int m)
+{
+minute = m;
+}
+void set_sec(int s)
+{
+secunde = s;
+}
+};
+class Playlist
+{
+protected:
+Record* p;
+int n;
+public:
+Playlist(int n)
+{
+this->n = n;
+p = new Record[n];
+}
+void init()
+{
+char titlu[100], artist[100];
+int min, sec;
+for (int i = 0; i < n; i++)
+{
+cout << "\nPiesa:" << i + 1 << ": ";
+cout << "\n Titlu: ";
+cin >> titlu;
+p[i].set_titlu(titlu);
+cout << "Artist: ";
+cin >> artist;
+p[i].set_artist(artist);
+cout << "Durata \n Minute: ";
+cin >> min;
+p[i].set_min(min);
+cout << "\n Secunde: ";
+cin >> sec;
+p[i].set_sec(sec);
+}
+}
+Record getRecord(int n)
+{
+return p[n];
+}
+void setRecord(Record r, int n)
+{
+p[n] = r;
+}
+virtual void ordonare(int c, int n) = 0;
+};
+class PlaylistImplementation : public Playlist
+{
+public:
+PlaylistImplementation(int n) :Playlist(n)
+{
+}
+void afis(int n)
+{
+for (int i = 0; i < n; i++)
+{
+cout << endl;
+cout << "\t Titlu: " << p[i].get_titlu() << endl;
+cout << "\t Artist: " << p[i].get_artist() << endl;
+cout << "\t Durata:" << endl << " \t \t Minute: " << p[i].get_min() << endl <<"\t\t Secunde: " << p[i].get_sec();
+}
+}
+void ordonare(int c, int m)
+{
+switch (c)
+{
+case 1:
+{
+char s1[100], s2[100];
+cout << " Ordonare alfabetica dupa titlu:";
+cout << endl;
+for (int i = 0; i < n; i++)
+for (int j = i + 1; j < n; j++)
+{
+strcpy(s1, p[i].get_titlu());
+strcpy(s2, p[j].get_titlu());
+if (strcmp(s1, s2) > 0)
+{
+Record aux;
+aux = p[i];
+p[i] = p[j];
+p[j] = aux;
+}
+}
+break;
+}
+case2:
+{
+char s1[100], s2[100];
+cout << " Ordonare alfabetica dupa artist:";
+cout << endl;
+for (int i = 0; i < n; i++)
+for (int j = i + 1; j < n; j++)
+{
+strcpy(s1, p[i].get_artist());
+strcpy(s2, p[j].get_artist());
+if (strcmp(s1, s2) > 0)
+{
+Record aux;
+aux = p[i];
+p[i] = p[j];
+p[j] = aux;
+}
+}
+break;
+}
+case 3:
+{
+int m1, m2, se1, se2;
+cout << "\n Ordonare crescatoare dupa durata:";
+cout << endl;
+for (int i = 0; i < n - 1; i++)
+for (int j = i + 1; j < n; j++)
+{
+m1 = p[i].get_min();
+se1 = p[i].get_sec();
+m2 = p[j].get_min();
+se2 = p[j].get_sec();
+if (m1 > m2)
+{
+Record aux;
+aux = p[i];
+p[i] = p[j];
+p[j] = aux;
+}
+else if (m1 == m2)
+{
+if (se1 > se2)
+{
+Record aux;
+aux = p[i];
+p[i] = p[j];
+p[j] = aux;
+}
+}
+}
+break;
+}
+default:
+{
+cout << endl;
+cout << "Trebuie sa selectati 1, 2 sau 3! " << endl;
+break;
+}
+}
+}
+};
+int main()
+{
+int n;
+cout << "Introuduceti numarul de inregistrari: ";
+cin >> n;
+PlaylistImplementation x(n);
+x.init();
+int c;
+cout << "Cititi valoarea parametrului functiei de ordonare:";
+cin >> c;
+x.ordonare(c, n);
+cout << endl;
+cout << "Lista ordonata de inregistrari este: ";
+x.afis(n);
+}
